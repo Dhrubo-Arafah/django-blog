@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+{% load custom_filters %}
+{%block title%}{{user}}{%endblock%}
+{%block content%}
+{% for blog in user.post_author.all %}
+<div class="shadow-sm p-3 mb-3">
+            <h3>{{blog.title}}</h3>
+            <h6 class="bg-success p-1 rounded-pill w-25 text-center text-white">@{{blog.author}}</h6> <span>{{blog.blog_liked.all.count}}</span> | <span>{{blog.blog_liked.all.count}}</span>
+            <p>{{blog.publish_date}}</p>
+            <img src="/media/{{blog.cover}}" alt="image" class="w-100">
+            <p>{{blog.content | range_filter | linebreaks}} <a href="{%url 'blog_detail' slug=blog.slug%}"
+                                                               class="text-success text-decoration-none fw-bold">Read
+                more</a></p>
+        </div>
+{% endfor %}
+{%endblock%}

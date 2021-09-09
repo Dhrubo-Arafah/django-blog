@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{%load crispy_forms_tags%}
+{%block title%}{{blog.title}}{%endblock%}
+{%block content%}
+<div class="row">
+    <div class="col-8">
+        <h1>{{blog.title}}</h1>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h6>{{blog.author}}</h6>
+                <span>
+                    <i class="fas fa-pencil-alt text-white bg-success p-2 rounded-circle"></i>{{blog.publish_date}}
+                </span>
+                <span>
+                    <i class="far fa-edit text-white bg-success p-2 rounded-circle"></i>{{blog.update_date}}
+                </span>
+            </div>
+            <div>
+                <a href="">
+                    <i class="fas fa-share text-white bg-success p-3 rounded-circle"></i>
+                </a>
+            </div>
+        </div>
+        <img src="/media/{{blog.cover}}" alt="{{blog.title}}" class="img-fluid">
+        <p class="text-wrap">{{blog.content | linebreaks}}</p>
+        {% if blog.author == request.user%}
+        <a href="{% url 'update' pk=blog.pk %}">Update</a>
+        {% endif %}
+        <br>
+        <hr>
+        <span class="fs-2 fw-bold">{{blog.blog_liked.all.count}}</span>
+        {% if not liked %}
+        <a href="{% url 'liked' pk=blog.pk %}"><i class="far fa-thumbs-up fa-2x text-success"></i></a>
+        {% else %}
+        <a href="{% url 'liked' pk=blog.pk %}"><i class="fas fa-thumbs-up fa-2x text-success"></i></a>
+        {%endif%}
+        <span class="fs-2 fw-bold">{{blog.blog_unliked.all.count}}</span>
+        {% if not unliked %}
+        <a href="{% url 'unliked' pk=blog.pk %}"><i class="far fa-thumbs-down fa-2x text-success"></i></a>
+        {% else %}
+        <a href="{% url 'unliked' pk=blog.pk %}"><i class="fas fa-thumbs-down fa-2x text-success"></i></a>
+        {%endif%}
+        <hr>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" value="Submit" class="btn btn-success text-white">
+        </form>
+        <br>
+
+        {% for comment in blog.blog_comment.all %}
+        <span class="fw-bold me-2">@{{comment.user}}</span> <span>{{comment.comment_date}}</span>
+        <p>{{comment.comment}}</p>
+        {% endfor %}
+    </div>
+
+    <div class="col-4"></div>
+</div>
+{%endblock%}

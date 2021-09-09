@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+{%block title%}Profile{%endblock%}
+{%block content%}
+
+{%if user.user_profile.profile_pic%}
+<img src="/media/{{user.user_profile.profile_pic}}" alt="image1" width="100px" height="100px" class="rounded-circle shadow">
+{%else%}
+<img src="/media/dummy.png" alt="image2" width="100px" class="rounded-circle shadow">
+{%endif%}
+<br>
+<a href="{%url 'update_pro_pic'%}">Change Profile Picture</a>
+<p>Username: {{user.username}}</p>
+<p>Email: {{user.email}}</p>
+<p>Name: {{user.first_name}} {{user.last_name}}</p>
+<br>
+<a href="{%url 'update_profile'%}">update profile</a>
+{%endblock%}

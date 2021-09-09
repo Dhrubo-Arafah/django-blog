@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="#"><i class="fab fa-blogger-b blog border-success text-success"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex mx-auto w-100">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-success rounded-circle py-2" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex h-auto align-items-center">
+                {% if request.user.is_authenticated%}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {%if user.user_profile.profile_pic%}
+                        <img src="/media/{{user.user_profile.profile_pic}}" alt="image1" width="50px" height="50px"
+                             class="rounded-circle shadow">
+                        {%else%}
+                        <img src="/media/dummy.png" alt="image2" width="50px" class="rounded-circle shadow">
+                        {%endif%}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{%url 'profile'%}"><i
+                                class="fas fa-user-circle bg-success text-white p-2 rounded-circle me-2"></i>Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="dropdown-item" href="{%url 'post'%}"><i
+                                    class="fas fa-plus bg-success text-white p-2 rounded-circle me-2"></i>Create
+                                Post</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{%url 'my-blogs'%}"><i
+                                class="fas fa-sticky-note bg-success text-white p-2 rounded-circle me-2"></i>My Blogs</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{%url 'logout'%}"><i class="fas fa-sign-in-alt text-white p-2 bg-success rounded-circle me-2"></i>Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="{%url 'login'%}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

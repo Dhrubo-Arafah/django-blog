@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+{%load crispy_forms_tags%}
+{%block title%}Update Profile Picture{%endblock%}
+{%block content%}
+<form action="" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{form|crispy}}
+    <input type="submit" value="Update">
+</form>
+<p>Skip For Now?</p><a href="{%url 'update_profile'%}"><strong>Back</strong></a>
+{%endblock%}
